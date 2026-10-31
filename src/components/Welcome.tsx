@@ -1,5 +1,6 @@
 import { KeyRound, Link2, Lock } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
+import logo from "@/assets/logo/icon.svg";
 import { AgentTile } from "@/components/AgentTile";
 import { Button } from "@/components/ui/button";
 import { AGENT_NAME, STACK_ORDER } from "@/lib/agents";
@@ -58,6 +59,7 @@ export function Welcome({ onDone }: { onDone: () => void }) {
 
   return (
     <div className="px-5 pb-5 pt-[22px]">
+      <img src={logo} alt="" width={44} height={44} className="mb-3 block" />
       <h1 className="m-0 text-[19px] font-semibold tracking-[-0.02em]">{t("welcomeTitle")}</h1>
       <p className="mt-1.5 text-[13.5px] leading-[1.45] text-muted-foreground">
         {t("welcomeLead")}

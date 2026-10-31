@@ -557,15 +557,16 @@ mod tests {
         let agent = |agent, cost_usd, tokens| AgentShare { agent, cost_usd, tokens, unpriced_tokens: 0 };
         let data = ShareData {
             agents: vec![
-                agent(Agent::ClaudeCode, 184.3, 96_000_000),
-                agent(Agent::Cursor, 52.5, 31_000_000),
-                agent(Agent::Codex, 31.8, 18_000_000),
-                agent(Agent::OpenCode, 4.2, 2_400_000),
+                agent(Agent::ClaudeCode, 411.4, 49_000_000),
+                agent(Agent::Cursor, 105.0, 11_000_000),
+                agent(Agent::Codex, 68.6, 7_000_000),
+                agent(Agent::OpenCode, 8.6, 3_000_000),
+                agent(Agent::Hermes, 6.4, 1_000_000),
             ],
-            cost_usd: 272.8,
-            tokens: 147_400_000,
+            cost_usd: 600.0,
+            tokens: 71_000_000,
             unpriced_tokens: 0,
-            sessions: 386,
+            sessions: 527,
             top_model: Some("Opus 5.5".into()),
         };
         let request = ShareRequest { period: Period::Last30, agent: None, hide_cost: false, dark: true };

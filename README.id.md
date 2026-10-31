@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/logo/icon-256.png" alt="Buku Token logo: a shelf of books that doubles as a bar chart" width="128" height="128">
+</p>
+
 <h1 align="center">Buku Token</h1>
 
 <p align="center">

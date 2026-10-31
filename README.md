@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/logo/icon-256.png" alt="Buku Token logo: a shelf of books that doubles as a bar chart" width="128" height="128">
+</p>
+
 <h1 align="center">Buku Token</h1>
 
 <p align="center">
@@ -5,6 +9,7 @@
 </p>
 
 <p align="center">
+  <a href="https://buku-token.vercel.app"><img alt="Website" src="https://img.shields.io/badge/website-buku--token.vercel.app-black"></a>
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-blue"></a>
   <img alt="Platform: macOS" src="https://img.shields.io/badge/platform-macOS-lightgrey">
   <img alt="Built with Tauri 2" src="https://img.shields.io/badge/Tauri-2-24C8DB">
