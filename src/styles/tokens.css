@@ -1,0 +1,31 @@
+/* Agent colors. The zinc light/dark
+   tokens (--background, --muted, --border, ...) live in ../index.css next to shadcn's. */
+:root {
+  --a-cc: #c4572b;
+  --a-cx: #2a6fc9;
+  --a-oc: #178a5f;
+  --a-hm: #8b4fc4;
+  --a-cr: #52525b;
+  /* Antigravity's tile (not an agent): Google blue */
+  --svc-ag: #4285f4;
+  /* Text for a good state ("Terhubung"): the agent green is too light for 4.5:1 on white. */
+  --ok: #0f7a52;
+}
+
+.dark {
+  --a-cc: #d9744a;
+  --a-cx: #4c89d8;
+  --a-oc: #2ca474;
+  --a-hm: #a072da;
+  --a-cr: #a1a1aa;
+  --svc-ag: #4285f4;
+  --ok: #2ca474;
+}
+
+@theme inline {
+  --color-agent-cc: var(--a-cc);
+  --color-agent-cx: var(--a-cx);
+  --color-agent-oc: var(--a-oc);
+  --color-agent-hm: var(--a-hm);
+  --color-agent-cr: var(--a-cr);
+}

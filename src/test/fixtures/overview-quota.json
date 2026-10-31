@@ -1,0 +1,289 @@
+{
+  "burn": {
+    "windowStart": "2026-10-30T10:00:00Z",
+    "resetsAt": "2026-10-30T15:00:00Z",
+    "points": [
+      [
+        0,
+        0.0
+      ],
+      [
+        60,
+        24.5
+      ]
+    ],
+    "projectedAtReset": 88.0,
+    "exhaustsAt": null
+  },
+  "quotas": [
+    {
+      "agent": "cc",
+      "plan": "Max 5x",
+      "windows": [
+        {
+          "id": "five_hour",
+          "label": "Sesi 5 jam",
+          "usedPct": 62.0,
+          "resetsAt": "2026-10-30T15:00:00Z",
+          "observedAt": "2026-10-30T10:00:00Z",
+          "expired": false
+        },
+        {
+          "id": "seven_day",
+          "label": "Mingguan",
+          "usedPct": 30.0,
+          "resetsAt": "2026-10-30T15:00:00Z",
+          "observedAt": "2026-10-30T10:00:00Z",
+          "expired": false
+        }
+      ],
+      "binding": {
+        "id": "five_hour",
+        "label": "Sesi 5 jam",
+        "usedPct": 62.0,
+        "resetsAt": "2026-10-30T15:00:00Z",
+        "observedAt": "2026-10-30T10:00:00Z",
+        "expired": false
+      },
+      "nearLimit": false,
+      "unavailableReason": null
+    },
+    {
+      "agent": "cx",
+      "plan": null,
+      "windows": [],
+      "binding": null,
+      "nearLimit": false,
+      "unavailableReason": "Belum ada data"
+    }
+  ],
+  "today": {
+    "costUsd": 15.25,
+    "unpricedTokens": 1200,
+    "tokens": 1240000,
+    "byAgent": [
+      12.5,
+      2.75,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "unpricedByAgent": [
+      0,
+      0,
+      1200,
+      0,
+      0
+    ],
+    "hours": [
+      {
+        "hour": 6,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 7,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 8,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 9,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 10,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 11,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 12,
+        "byAgent": [
+          3.5,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 13,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 14,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 15,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 16,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 17,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 18,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 19,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 20,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 21,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 22,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "hour": 23,
+        "byAgent": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "rtk": {
+    "savedTokens": 98000,
+    "approxUsd": 1.4,
+    "model": "claude-opus-5-5"
+  },
+  "openrouter": {
+    "data": {
+      "free": false,
+      "balanceUsd": 62.75,
+      "todayUsd": 1.25,
+      "weekUsd": 6.5,
+      "monthUsd": 21.5,
+      "limit": {
+        "limitUsd": 50.0,
+        "remainingUsd": 28.5,
+        "reset": "monthly"
+      }
+    },
+    "unavailableReason": null
+  },
+  "antigravity": {
+    "today": 3,
+    "last7Days": 12,
+    "lastActive": "2026-10-30T09:00:00Z",
+    "totalSessions": 121,
+    "totalSteps": 23021
+  },
+  "updatedAt": "2026-10-30T12:40:00Z"
+}

@@ -1,0 +1,50 @@
+{
+  "rows": [
+    {
+      "model": "claude-opus-5-5",
+      "agent": "cc",
+      "costUsd": 12.0,
+      "unpricedTokens": 0,
+      "tokens": 1000,
+      "input": 100,
+      "output": 200,
+      "cacheRead": 600,
+      "cacheWrite": 100,
+      "share": 80.0
+    },
+    {
+      "model": "big-pickle",
+      "agent": "oc",
+      "costUsd": null,
+      "unpricedTokens": 0,
+      "tokens": 1000,
+      "input": 100,
+      "output": 200,
+      "cacheRead": 600,
+      "cacheWrite": 100,
+      "share": null
+    }
+  ],
+  "totalCostUsd": 12.0,
+  "totalTokens": 2000,
+  "unpricedTokens": 1000,
+  "tokenMix": {
+    "tokens": {
+      "cacheRead": 60.0,
+      "input": 10.0,
+      "output": 20.0,
+      "cacheWrite": 10.0
+    },
+    "cost": {
+      "cacheRead": 20.0,
+      "input": 20.0,
+      "output": 50.0,
+      "cacheWrite": 10.0
+    }
+  },
+  "cacheInsight": {
+    "tokenShare": 60.0,
+    "costShare": 20.0,
+    "costWithoutCache": 40.0
+  }
+}

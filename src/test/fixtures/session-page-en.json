@@ -1,0 +1,50 @@
+{
+  "days": [
+    {
+      "date": "2026-10-30",
+      "label": "Today · Fri, Oct 30",
+      "costUsd": 15.25,
+      "unpricedTokens": 612000,
+      "sessions": [
+        {
+          "sessionId": "s1",
+          "agent": "cc",
+          "project": {
+            "path": "/Users/dev/Documents/buku-token",
+            "name": "buku-token",
+            "displayPath": "buku-token"
+          },
+          "startedAt": "2026-10-30T05:40:00Z",
+          "durationMin": 72,
+          "mainModel": "claude-opus-5-5",
+          "tokens": 612000,
+          "costUsd": 15.25,
+          "unpricedTokens": 0
+        },
+        {
+          "sessionId": "s2",
+          "agent": "oc",
+          "project": {
+            "path": "/Users/dev/Documents/buku-token",
+            "name": "buku-token",
+            "displayPath": "buku-token"
+          },
+          "startedAt": "2026-10-30T05:40:00Z",
+          "durationMin": 72,
+          "mainModel": "claude-opus-5-5",
+          "tokens": 612000,
+          "costUsd": null,
+          "unpricedTokens": 612000
+        }
+      ]
+    }
+  ],
+  "hasMore": true,
+  "projects": [
+    {
+      "path": "/Users/dev/Documents/buku-token",
+      "name": "buku-token",
+      "displayPath": "buku-token"
+    }
+  ]
+}

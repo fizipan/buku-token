@@ -1,0 +1,23 @@
+{
+  "running": false,
+  "done": 648,
+  "total": 648,
+  "skipped": 2,
+  "errors": 0,
+  "lastScanAt": "2026-10-30T12:40:00Z",
+  "pricingVersion": "2026-10-30",
+  "sources": [
+    {
+      "agent": "cc",
+      "path": "/Users/dev/.claude/projects",
+      "found": true
+    }
+  ],
+  "activitySources": [
+    {
+      "name": "Antigravity",
+      "path": "/Users/dev/.gemini/antigravity/conversations",
+      "found": true
+    }
+  ]
+}

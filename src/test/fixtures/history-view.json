@@ -1,0 +1,38 @@
+{
+  "days": [
+    {
+      "date": "2026-10-29",
+      "byAgent": [
+        5.0,
+        1.0,
+        0.0,
+        0.5,
+        0.0
+      ],
+      "unpricedTokens": 700
+    }
+  ],
+  "totalUsd": 6.5,
+  "avgPerDay": 6.5,
+  "unpricedTokens": 0,
+  "plans": [
+    {
+      "planId": "claude-max",
+      "name": "Claude Max 5×",
+      "agents": [
+        "cc"
+      ],
+      "priceUsd": 100.0,
+      "cycle": {
+        "start": "2026-10-01",
+        "endExclusive": "2026-11-01",
+        "dayOfCycle": 30,
+        "length": 31
+      },
+      "apiEquivalentUsd": 420.0,
+      "multiple": 4.2,
+      "projectedUsd": 434.0,
+      "projectedMultiple": 4.34
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "rows": [
+    {
+      "project": {
+        "path": "/Users/dev/Documents/buku-token",
+        "name": "buku-token",
+        "displayPath": "buku-token"
+      },
+      "byAgent": [
+        8.0,
+        2.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "costUsd": 10.0,
+      "unpricedTokens": 0,
+      "sessions": 4,
+      "share": 50.0,
+      "folded": 0
+    },
+    {
+      "project": {
+        "path": "/Users/dev/Documents/Project Lainnya",
+        "name": "Project Lainnya",
+        "displayPath": "Project Lainnya"
+      },
+      "byAgent": [
+        8.0,
+        2.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "costUsd": 10.0,
+      "unpricedTokens": 0,
+      "sessions": 4,
+      "share": 50.0,
+      "folded": 3
+    }
+  ],
+  "totalCostUsd": 20.0,
+  "insight": {
+    "project": {
+      "path": "/Users/dev/Documents/buku-token",
+      "name": "buku-token",
+      "displayPath": "buku-token"
+    },
+    "share": 50.0,
+    "prevShare": 35.0
+  }
+}

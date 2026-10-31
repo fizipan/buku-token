@@ -1,0 +1,4 @@
+Source: @lobehub/icons-static-svg@1.68.0 (MIT) via cdn.jsdelivr.net, downloaded 2026-10-30.
+Logos are trademarks of their owners; used to identify providers in a personal tool.
+Source: antigravity.svg is the Antigravity mark from robinebers/openusage (MIT), recolored to currentColor (the tile uses --svc-ag, Google blue #4285F4).
+Logos are trademarks of their owners; used to identify providers in a personal tool.

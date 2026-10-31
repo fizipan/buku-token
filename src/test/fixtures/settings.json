@@ -1,0 +1,31 @@
+{
+  "usdToIdr": 16300.0,
+  "plans": [
+    {
+      "id": "p",
+      "name": "Plan",
+      "priceUsd": 20.0,
+      "renewalDay": 5,
+      "agents": [
+        "cx"
+      ]
+    }
+  ],
+  "enabledAgents": {
+    "oc": false,
+    "cc": true
+  },
+  "launchAtLogin": false,
+  "lastTab": "ringkasan",
+  "onboarded": false,
+  "cursorPlanAdded": false,
+  "theme": "system",
+  "quotaDisplay": "left",
+  "resetDisplay": "clock",
+  "notifyLowQuota": false,
+  "notifyProjectedExhaustion": false,
+  "hideOnScreenShare": false,
+  "openrouterEnabled": true,
+  "antigravityEnabled": true,
+  "language": "id"
+}

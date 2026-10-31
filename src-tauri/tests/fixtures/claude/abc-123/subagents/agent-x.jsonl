@@ -1,0 +1,1 @@
+{"type":"assistant","sessionId":"sidechain-9","isSidechain":true,"cwd":"/work/app","requestId":"req_S","timestamp":"2026-07-06T07:00:00.000Z","message":{"id":"msg_S","model":"claude-fable-5","usage":{"input_tokens":10,"cache_creation_input_tokens":100,"cache_read_input_tokens":5,"output_tokens":7}}}
