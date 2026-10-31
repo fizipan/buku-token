@@ -50,7 +50,21 @@ Angka OpenRouter tidak masuk total, karena pengeluaran yang sama bisa saja sudah
 
 ## Instalasi
 
-Belum ada rilis siap pakai, jadi kamu perlu build sendiri. Yang dibutuhkan: macOS (dikembangkan di Apple Silicon), Node.js, [pnpm](https://pnpm.io), [Rust](https://rustup.rs), dan Xcode Command Line Tools.
+```bash
+brew install --cask fizipan/tap/buku-token
+```
+
+Yang dibutuhkan: [Homebrew](https://brew.sh) dan Mac Apple Silicon. Perbarui dengan `brew upgrade --cask buku-token`, dan hapus dengan `brew uninstall --cask buku-token`. Tambahkan `--zap` kalau data lokal aplikasinya juga mau dihapus.
+
+Saat pertama dibuka, macOS meminta akses ke item Keychain `Claude Code-credentials`. Pilih **Always Allow** supaya kuota Claude terbaca. Kalau ditolak, bagian lain tetap jalan.
+
+**Aplikasi ini belum dinotarisasi Apple.** Tanda tangannya memakai sertifikat self-signed, jadi cask menghapus tanda karantina unduhan supaya macOS mau membukanya. Kalau kamu tidak mau itu, build dari source saja.
+
+DMG juga tersedia di [Releases](https://github.com/fizipan/buku-token/releases). macOS memblokir saat pertama dibuka, jadi buka System Settings, lalu Privacy & Security, dan pilih **Open Anyway**.
+
+### Build dari source
+
+Mac Intel perlu build dari source, dan ini belum pernah diuji di Intel. Yang dibutuhkan: macOS, Node.js, [pnpm](https://pnpm.io), [Rust](https://rustup.rs), dan Xcode Command Line Tools.
 
 **1. Buat sertifikat signing lokal.** Cukup sekali. Dengan identitas yang tetap, macOS mengingat jawaban Keychain kamu setelah build ulang.
 
@@ -70,8 +84,6 @@ pnpm tauri build --bundles app
 ```
 
 Hasilnya ada di `src-tauri/target/release/bundle/macos/Buku Token.app`. Salin ke `/Applications` untuk dipakai terus.
-
-**3. Saat pertama dibuka.** macOS meminta akses ke item Keychain `Claude Code-credentials`. Pilih **Always Allow** supaya kuota Claude terbaca. Kalau ditolak, bagian lain tetap jalan.
 
 ### Menghubungkan Cursor dan OpenRouter
 
@@ -99,7 +111,7 @@ Tidak ada telemetri atau analitik.
 
 ## Keterbatasan
 
-- Hanya macOS.
+- Hanya macOS, dan rilisnya untuk Apple Silicon. Aplikasi ini belum dinotarisasi.
 - Endpoint Cursor tidak terdokumentasi dan bisa berubah kapan saja, sehingga angkanya bisa berhenti sampai aplikasi diperbarui. Cookie tidak diperbarui otomatis, jadi tempel yang baru saat habis. Menghubungkan akun Cursor lain mencampur riwayat kedua akun.
 - Kuota Codex diambil dari log sesi, jadi hanya sesegar sesi Codex terakhirmu.
 - Antigravity tidak punya angka token, biaya, atau kuota di sini. Database ringkasannya bisa sedikit tertinggal dari aplikasi yang sedang berjalan.

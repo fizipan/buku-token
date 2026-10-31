@@ -61,6 +61,8 @@ h1{font-size:clamp(46px,min(6.4vw,11vh),112px)}
 .btn{display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 20px;border-radius:10px;background:var(--text);color:var(--ink);font-weight:600;font-size:16px;text-decoration:none;transition:transform .25s var(--ease),background .2s}
 .btn:hover{background:#e4e4e7;transform:translateY(-1px)}.btn svg{width:18px;height:18px;fill:currentColor}
 .link{font-weight:500;text-underline-offset:4px}
+.cmd{display:flex;align-items:center;gap:12px;min-height:46px;padding:7px 8px 7px 16px;border-radius:10px;background:var(--text);color:var(--ink);max-width:100%}
+.cmd code{font-size:14px;line-height:1.35;overflow-wrap:anywhere}
 .note{margin-top:18px;font-size:14px;color:var(--mute)}
 .pop-wrap{position:absolute;top:6px;right:var(--pop-right);width:380px;transform-origin:top center;transition:opacity .22s,transform .32s var(--ease)}
 .pop-wrap[hidden]{display:block;opacity:0;transform:translateY(-8px) scale(.985);pointer-events:none;visibility:hidden}
@@ -209,6 +211,10 @@ svg.gc{clip-path:inset(0);transition:clip-path 1.4s var(--ease)}
 .code{margin:0;background:var(--ink-2);border:1px solid var(--line);border-radius:12px;padding:18px 74px 18px 18px;overflow-x:auto;font:400 14.5px/1.7 var(--mono);white-space:pre}
 .copy{position:absolute;top:10px;right:10px;appearance:none;background:var(--ink-3);border:1px solid var(--line);color:var(--text);font:500 13px var(--sans);height:30px;padding:0 11px;border-radius:7px;cursor:pointer}
 .copy:hover{background:#34343a}
+.cmd .copy{position:static;flex:none;background:var(--ink);border-color:var(--ink)}.cmd .copy:hover{background:var(--ink-3)}
+.source{margin-top:32px;border-block:1px solid var(--line);padding:16px 0}
+.source summary{font-weight:600;cursor:pointer}.source .steps{margin-top:32px}.source[open]{padding-bottom:32px}
+.steps+.needs{margin-top:36px}
 .needs{margin-top:22px;color:var(--mute);max-width:44em;font-size:16px}
 
 footer{padding:40px var(--edge) 56px;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px;display:grid;gap:10px}
@@ -279,10 +285,10 @@ footer .brand{text-decoration:none;display:inline-flex;align-items:center;gap:9p
     <h1 data-t="h1">Know what's left, and where it went.</h1>
     <p class="lede" data-t="lede">Buku Token sits in your Mac's menu bar and shows the quota and cost of Claude Code, Codex, Cursor and more, mostly from logs they already write, with no new account and no telemetry.</p>
     <div class="acts">
-      <a class="btn" href="https://github.com/fizipan/buku-token"><svg aria-hidden="true"><use href="#gh"/></svg><span data-t="cta">View on GitHub</span></a>
-      <a class="link" href="#install" data-t="cta2">Build it yourself</a>
+      <div class="cmd"><code id="heroCmd">brew install --cask fizipan/tap/buku-token</code><button class="copy" type="button" data-copy="#heroCmd" data-t="copy">Copy</button></div>
+      <a class="link" href="https://github.com/fizipan/buku-token" data-t="cta">View on GitHub</a>
     </div>
-    <p class="note" data-t="note">Free and MIT licensed. macOS only.</p>
+    <p class="note" data-t="note">Free and MIT licensed. For Apple Silicon Macs.</p>
     <p class="cap" id="cap" aria-live="polite"></p>
   </div>
   <div class="pop-wrap" id="popover">
@@ -451,19 +457,32 @@ footer .brand{text-decoration:none;display:inline-flex;align-items:center;gap:9p
 
 <section class="install" id="install">
   <div class="install-head">
-    <h2 data-t="instH">Build it from source.</h2>
-    <p class="sub" data-t="instSub">There's no prebuilt download yet. You'll need Node.js, pnpm, Rust and the Xcode Command Line Tools.</p>
+    <h2 data-t="instH">Install it with one command.</h2>
+    <p class="sub" data-t="instSub">You need Homebrew and an Apple Silicon Mac.</p>
     <a class="btn" href="https://github.com/fizipan/buku-token"><svg aria-hidden="true"><use href="#gh"/></svg><span data-t="cta">View on GitHub</span></a>
     <p class="needs" data-t="limits">A few limits: Cursor's endpoints are undocumented and can change, Codex quota is only as fresh as your last session, and Antigravity shows activity without tokens or cost. The README lists the rest.</p>
   </div>
+  <div>
   <ol class="steps">
+    <li><span class="n" aria-hidden="true">1</span><div><h3 data-t="in1">Install it</h3><div class="code-wrap"><pre class="code" id="brew" tabindex="0">brew install --cask fizipan/tap/buku-token</pre><button class="copy" type="button" data-copy="#brew" data-t="copy">Copy</button></div></div></li>
+    <li><span class="n" aria-hidden="true">2</span><div><h3 data-t="in2">Open it from Applications</h3><p data-t="in2p">It stays in the menu bar, with no Dock icon. When macOS asks about <code>Claude Code-credentials</code>, choose Always Allow to see your Claude quota. Everything else works if you refuse.</p></div></li>
+    <li><span class="n" aria-hidden="true">3</span><div><h3 data-t="in3">Update it the same way</h3><div class="code-wrap"><pre class="code" id="upgrade" tabindex="0">brew upgrade --cask buku-token</pre><button class="copy" type="button" data-copy="#upgrade" data-t="copy">Copy</button></div></div></li>
+  </ol>
+  <p class="needs" data-t="notar">The app isn't notarized by Apple. It's signed with a self-signed certificate, so the cask removes the download quarantine flag to let macOS open it. If you'd rather not allow that, build it from source.</p>
+  <details class="source">
+    <summary data-t="srcSum">Other ways to install</summary>
+    <p class="needs" data-t="dmg">There's a DMG on the <a href="https://github.com/fizipan/buku-token/releases">Releases page</a>. macOS blocks its first open, so go to System Settings, then Privacy &amp; Security, and choose Open Anyway.</p>
+    <p class="needs" data-t="srcNeeds">To build from source, which Intel Macs also need, you'll want Node.js, pnpm, Rust and the Xcode Command Line Tools.</p>
+    <ol class="steps">
     <li><span class="n" aria-hidden="true">1</span><div><h3 data-t="st1">Create a signing certificate, once</h3><p data-t="st1p">In Keychain Access, open Certificate Assistant and create a certificate named <code>Buku Token Local</code>, with Self-Signed Root and Code Signing. It lets macOS remember your Keychain answer after a rebuild.</p></div></li>
     <li><span class="n" aria-hidden="true">2</span><div><h3 data-t="st2">Build the app</h3><div class="code-wrap"><pre class="code" id="cmd" tabindex="0">git clone https://github.com/fizipan/buku-token.git
 cd buku-token
 pnpm install
-pnpm tauri build --bundles app</pre><button class="copy" id="copy" type="button" data-t="copy">Copy</button></div></div></li>
+pnpm tauri build --bundles app</pre><button class="copy" type="button" data-copy="#cmd" data-t="copy">Copy</button></div></div></li>
     <li><span class="n" aria-hidden="true">3</span><div><h3 data-t="st3">Move it to Applications and open it</h3><p data-t="st3p">You'll find it at <code>src-tauri/<wbr>target/<wbr>release/<wbr>bundle/<wbr>macos/<wbr>Buku Token.app</code>. When macOS asks about <code>Claude Code-credentials</code>, choose Always Allow to see your Claude quota. Everything else works if you refuse.</p></div></li>
-  </ol>
+    </ol>
+  </details>
+  </div>
 </section>
 </main>
 
@@ -492,7 +511,7 @@ pnpm tauri build --bundles app</pre><button class="copy" id="copy" type="button"
       tabsLabel: "Tab aplikasi",
       h1: "Tahu sisanya, dan ke mana perginya.", wallCap: "Biaya per jam hari ini. Data contoh.",
       lede: "Buku Token ada di menu bar Mac kamu dan menampilkan kuota serta biaya Claude Code, Codex, Cursor, dan lainnya, sebagian besar dari log yang sudah mereka tulis, tanpa akun baru dan tanpa telemetri.",
-      cta: "Lihat di GitHub", cta2: "Build sendiri", note: "Gratis dan berlisensi MIT. Hanya untuk macOS.",
+      cta: "Lihat di GitHub", note: "Gratis dan berlisensi MIT. Untuk Mac Apple Silicon.",
       toolsH: "Apa yang terbaca dari tiap tool.", toolsSub: "Sebagian tool menyimpan log lengkap, sebagian nyaris tidak. Ini yang bisa didapat Buku Token dari tiap tool.",
       thTool: "Tool", thCost: "Token dan biaya", thQuota: "Kuota", thSource: "Dibaca dari", yes: "Ya", cxQuota: "Ya, per sesi terakhirmu", afterConnect: "Setelah dihubungkan", orCost: "Pengeluaran dan saldo", orQuota: "Limit key, kalau ada", activity: "Aktivitas saja", rtkCost: "Token yang dihemat",
       toolsFoot: "OpenRouter tidak masuk total, karena pengeluaran yang sama bisa saja sudah dihitung OpenCode atau Hermes. Biaya adalah perkiraan harga API, kecuali tool melaporkan biayanya sendiri, dan model tanpa harga tampil sebagai tanda strip, bukan $0.",
@@ -506,7 +525,10 @@ pnpm tauri build --bundles app</pre><button class="copy" id="copy" type="button"
       shareH: "Bagikan angkanya, bukan detailnya.", shareSub: "Ubah sehari, seminggu, atau sebulan jadi kartu yang bisa kamu posting. Dibuat di Mac kamu, tanpa unggahan dan tanpa tautan.",
       s1: "Pilih semua agent atau satu saja.", s2: "Sembunyikan biaya, dan kartu menampilkan porsi token.", s3: "Nama project, path, dan email tidak pernah masuk gambar. Nama model yang tidak dikenal tampil sebagai “Model Lain”.",
       fitH: "Terang atau gelap, Indonesia atau Inggris.", fitSub: "Tampilannya mengikuti Mac kamu, dan bahasanya dipilih di Pengaturan. Aplikasi bisa memberi tahu saat kuota di bawah 15%, dan berusaha menyembunyikan angka di menu bar saat kamu berbagi layar.",
-      instH: "Build dari source.", instSub: "Belum ada unduhan siap pakai. Yang dibutuhkan: Node.js, pnpm, Rust, dan Xcode Command Line Tools.",
+      instH: "Instal dengan satu perintah.", instSub: "Kamu butuh Homebrew dan Mac Apple Silicon.",
+      in1: "Instal", in2: "Buka dari Applications", in2p: "Aplikasinya ada di menu bar, tanpa ikon di Dock. Saat macOS bertanya soal <code>Claude Code-credentials</code>, pilih Always Allow supaya kuota Claude terbaca. Bagian lain tetap jalan kalau ditolak.", in3: "Perbarui dengan cara yang sama",
+      notar: "Aplikasi ini belum dinotarisasi Apple. Tanda tangannya memakai sertifikat self-signed, jadi cask menghapus tanda karantina unduhan supaya macOS mau membukanya. Kalau kamu tidak mau itu, build dari source saja.",
+      srcSum: "Cara instal lain", dmg: 'Ada DMG di <a href="https://github.com/fizipan/buku-token/releases">halaman Releases</a>. macOS memblokir saat pertama dibuka, jadi buka System Settings, lalu Privacy &amp; Security, dan pilih Open Anyway.', srcNeeds: "Untuk build dari source, yang juga dibutuhkan Mac Intel, kamu perlu Node.js, pnpm, Rust, dan Xcode Command Line Tools.",
       st1: "Buat sertifikat signing, sekali saja", st1p: "Di Keychain Access, buka Certificate Assistant dan buat sertifikat bernama <code>Buku Token Local</code>, dengan Self-Signed Root dan Code Signing. Dengan ini macOS mengingat jawaban Keychain kamu setelah build ulang.",
       st2: "Build aplikasinya", copy: "Salin", copied: "Tersalin", st3: "Pindahkan ke Applications dan buka", st3p: "Hasilnya ada di <code>src-tauri/<wbr>target/<wbr>release/<wbr>bundle/<wbr>macos/<wbr>Buku Token.app</code>. Saat macOS bertanya soal <code>Claude Code-credentials</code>, pilih Always Allow supaya kuota Claude terbaca. Bagian lain tetap jalan kalau ditolak.",
       limits: "Beberapa keterbatasan: endpoint Cursor tidak terdokumentasi dan bisa berubah, kuota Codex hanya sesegar sesi terakhirmu, dan Antigravity menampilkan aktivitas tanpa token atau biaya. Selengkapnya ada di README.",
@@ -522,7 +544,6 @@ pnpm tauri build --bundles app</pre><button class="copy" id="copy" type="button"
   $$("[data-t-label]").forEach((e) => { STR.en[e.dataset.tLabel] = e.getAttribute("aria-label"); });
   STR.en.copied = "Copied";
   $$("[data-t-alt]").forEach((e) => { STR.en[e.dataset.tAlt] = e.alt; });
-  const copyBtn = $("#copy");
   let lang = "en", tab = "overview", touched = false;
   const store = { get() { try { return localStorage.getItem("bt-lang"); } catch { return null; } }, set(v) { try { localStorage.setItem("bt-lang", v); } catch {} } };
   const shotAlt = { en: "Buku Token popover, %s tab, with example data", id: "Popover Buku Token, tab %s, dengan data contoh" };
@@ -569,11 +590,10 @@ pnpm tauri build --bundles app</pre><button class="copy" id="copy" type="button"
   navs.addEventListener("click", (e) => { if (e.target.closest("a")) setMenu(false); });
   document.addEventListener("click", (e) => { if (!e.target.closest("#menu, #navs")) setMenu(false); });
   document.addEventListener("keydown", (e) => { if (e.key !== "Escape") return; if (navs.classList.contains("open")) { setMenu(false); menu.focus(); } else if (!pop.hidden) { setOpen(false); tray.focus(); } });
-  copyBtn.addEventListener("click", async () => {
-    const text = $("#cmd").textContent;
-    const done = () => { copyBtn.textContent = STR[lang].copied; setTimeout(() => { copyBtn.textContent = STR[lang].copy; }, 1600); };
-    try { await navigator.clipboard.writeText(text); done(); } catch { const r = document.createRange(); r.selectNodeContents($("#cmd")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
-  });
+  $$("[data-copy]").forEach((btn) => btn.addEventListener("click", async () => {
+    const target = $(btn.dataset.copy);
+    try { await navigator.clipboard.writeText(target.textContent); btn.textContent = STR[lang].copied; setTimeout(() => { btn.textContent = STR[lang].copy; }, 1600); } catch { const r = document.createRange(); r.selectNodeContents(target); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  }));
   function clock() { $("#clock").textContent = new Date().toLocaleString(lang === "id" ? "id-ID" : "en-US", { weekday: "short", hour: "numeric", minute: "2-digit" }).replace(",", ""); alignPopover(); }
   setInterval(clock, 20000);
   // The panel hangs centred under the tray item, like the app does.

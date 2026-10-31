@@ -68,7 +68,21 @@ OpenRouter figures are kept out of the totals because OpenCode or Hermes may alr
 
 ## Install
 
-There are no prebuilt releases yet, so you build it yourself. You need macOS (developed on Apple Silicon), Node.js, [pnpm](https://pnpm.io), [Rust](https://rustup.rs) and the Xcode Command Line Tools.
+```bash
+brew install --cask fizipan/tap/buku-token
+```
+
+You need [Homebrew](https://brew.sh) and an Apple Silicon Mac. Upgrade with `brew upgrade --cask buku-token`, and remove it with `brew uninstall --cask buku-token`. Adding `--zap` to that also deletes the app's local data.
+
+On first run, macOS asks for access to the Keychain item `Claude Code-credentials`. Choose **Always Allow** to see your Claude quota. If you refuse, everything else still works.
+
+**The app is not notarized by Apple.** It is signed with a self-signed certificate, so the cask removes the download quarantine flag to let macOS open it. If you would rather not allow that, build it from source.
+
+You can also download the DMG from [Releases](https://github.com/fizipan/buku-token/releases). macOS blocks its first open, so go to System Settings, then Privacy & Security, and choose **Open Anyway**.
+
+### Build from source
+
+Intel Macs need to build from source, which has not been tested on Intel. You need macOS, Node.js, [pnpm](https://pnpm.io), [Rust](https://rustup.rs) and the Xcode Command Line Tools.
 
 **1. Create a local signing certificate.** You only do this once. A stable identity means macOS remembers your Keychain answer after a rebuild.
 
@@ -88,8 +102,6 @@ pnpm tauri build --bundles app
 ```
 
 The app lands in `src-tauri/target/release/bundle/macos/Buku Token.app`. Copy it to `/Applications` to keep it.
-
-**3. First run.** macOS asks for access to the Keychain item `Claude Code-credentials`. Choose **Always Allow** to see your Claude quota. If you refuse, everything else still works.
 
 ### Connecting Cursor and OpenRouter
 
@@ -117,7 +129,7 @@ There is no telemetry or analytics.
 
 ## Limitations
 
-- macOS only.
+- macOS only, and releases are for Apple Silicon. The app is not notarized.
 - Cursor's endpoints are undocumented and can change without notice, which would stop its figures until the app is updated. The cookie is not renewed for you, so paste a new one when it expires. Connecting a different Cursor account mixes both accounts' history.
 - Codex quota comes from session logs, so it is only as fresh as your last Codex session.
 - Antigravity has no token, cost or quota figures here. Its summaries database may lag slightly behind a running app.
