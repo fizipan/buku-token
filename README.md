@@ -42,8 +42,8 @@
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/share.png" alt="Share panel with a preview of the usage card" width="300">
-  <img src="docs/screenshots/settings.png" alt="Settings window" width="380">
+  <img src="docs/screenshots/share.png" alt="Share panel with a preview of the usage card" height="560">
+  <img src="docs/screenshots/settings.png" alt="Settings window" height="560">
 </p>
 
 ## Supported tools
