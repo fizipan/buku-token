@@ -5,51 +5,62 @@
 <h1 align="center">Buku Token</h1>
 
 <p align="center">
-  A macOS menu bar app that shows how much quota your AI coding agents have left and what they cost.
+  Know what's left, and where it went. A macOS menu bar app for the quota and cost of your AI coding agents.
 </p>
 
 <p align="center">
   <a href="https://buku-token.vercel.app"><img alt="Website" src="https://img.shields.io/badge/website-buku--token.vercel.app-black"></a>
+  <a href="https://github.com/fizipan/buku-token/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/fizipan/buku-token"></a>
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-blue"></a>
-  <img alt="Platform: macOS" src="https://img.shields.io/badge/platform-macOS-lightgrey">
-  <img alt="Built with Tauri 2" src="https://img.shields.io/badge/Tauri-2-24C8DB">
+  <img alt="macOS, Apple Silicon" src="https://img.shields.io/badge/macOS-Apple%20Silicon-lightgrey">
+</p>
+
+<p align="center">English · <a href="README.id.md">Bahasa Indonesia</a></p>
+
+<p align="center">
+  <img src="docs/screenshots/menubar.png" alt="Menu bar item showing the quota left for Claude Code, Codex and Cursor" width="354">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/menubar.png" alt="Menu bar item showing the quota left for Claude Code, Codex and Cursor" width="360">
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/overview-dark.png" alt="Overview tab in dark mode with a cost donut per agent and quota rows" width="340">
-  <img src="docs/screenshots/overview-light.png" alt="Overview tab in light mode" width="340">
+  <img src="docs/screenshots/overview-dark.png" alt="Overview tab in dark mode with a cost donut per agent and quota rows" width="380">
+  <img src="docs/screenshots/overview-light.png" alt="Overview tab in light mode" width="380">
 </p>
 
 <p align="center"><sub>All screenshots use example data.</sub></p>
 
-*Buku* is Indonesian for book. If you run several agents at once, it is easy to lose track of which subscription is about to run out and where the money went. Buku Token reads the logs your agents already write on your Mac and puts the answer one click away. There is no account to create and no telemetry. The interface is available in English and Indonesian.
+```bash
+brew install --cask fizipan/tap/buku-token
+```
 
-[Baca dalam Bahasa Indonesia](README.id.md)
+*Buku* is Indonesian for book. Run a few agents at once and it gets hard to tell which subscription is about to run out, or where the money went. Buku Token reads the logs your agents already write on your Mac and puts the answer one click away. There is no account to create and no telemetry, and the interface comes in English and Indonesian.
 
 ## What it shows
 
-- **Quota in the menu bar**: the logo and percentage left for each agent with a quota.
-- **Cost today**: a donut split by agent, plus the total in Rupiah and tokens.
-- **Quota per agent**: 5-hour and weekly windows, or Cursor's monthly Total, Auto and API, with reset times and a burn projection for Claude.
-- **Sessions, models, projects and history**: tokens and API-equivalent cost, broken down each way.
-- **Subscription value**: what you pay against what the same usage would cost at API prices.
-- **Notifications** (off by default): when a quota drops below 15%, or Claude is projected to run out before it resets.
-- **A share card**: an image you can copy or save, with an option to hide costs.
+**What's left.** The menu bar shows the logo and percentage left for each agent with a quota. Open it for 5-hour and weekly windows, Cursor's monthly Total, Auto and API, reset times, and a burn projection for Claude. Notifications, off by default, warn you when a quota drops below 15% or when Claude is projected to run out before it resets.
 
-<p align="center">
-  <img src="docs/screenshots/projects.png" alt="Projects tab" width="250">
-  <img src="docs/screenshots/models.png" alt="Models tab" width="250">
-  <img src="docs/screenshots/history.png" alt="History tab" width="250">
-</p>
+**Where it went.** Today's cost as a donut per agent, with the total in Rupiah and tokens, then tokens and API-equivalent cost by session, model, project and day.
 
-<p align="center">
-  <img src="docs/screenshots/share.png" alt="Share panel with a preview of the usage card" height="560">
-  <img src="docs/screenshots/settings.png" alt="Settings window" height="560">
-</p>
+**Was it worth it?** What you pay for a subscription next to what the same usage would cost at API prices, projected to the end of the cycle.
+
+**A card to share.** An image you can copy or save, with an option to hide costs. It has no project names, paths or emails.
+
+<table>
+  <tr><th>Sessions</th><th>Models</th></tr>
+  <tr>
+    <td><img src="docs/screenshots/sessions.png" alt="Sessions tab, listed by day" width="360"></td>
+    <td><img src="docs/screenshots/models.png" alt="Models tab with cost per model" width="360"></td>
+  </tr>
+  <tr><th>Projects</th><th>History</th></tr>
+  <tr>
+    <td><img src="docs/screenshots/projects.png" alt="Projects tab with cost per project" width="360"></td>
+    <td><img src="docs/screenshots/history.png" alt="History tab with daily cost and subscription value" width="360"></td>
+  </tr>
+  <tr><th>Share card</th><th>Settings</th></tr>
+  <tr>
+    <td valign="top"><img src="docs/screenshots/share.png" alt="Share panel with a preview of the usage card" width="360"></td>
+    <td valign="top"><img src="docs/screenshots/settings.png" alt="Settings window" width="360"></td>
+  </tr>
+</table>
 
 ## Supported tools
 
@@ -68,6 +79,7 @@ OpenRouter figures are kept out of the totals because OpenCode or Hermes may alr
 
 ## Install
 
+
 ```bash
 brew install --cask fizipan/tap/buku-token
 ```
@@ -80,7 +92,8 @@ On first run, macOS asks for access to the Keychain item `Claude Code-credential
 
 You can also download the DMG from [Releases](https://github.com/fizipan/buku-token/releases). macOS blocks its first open, so go to System Settings, then Privacy & Security, and choose **Open Anyway**.
 
-### Build from source
+<details>
+<summary><b>Build from source</b></summary>
 
 Intel Macs need to build from source, which has not been tested on Intel. You need macOS, Node.js, [pnpm](https://pnpm.io), [Rust](https://rustup.rs) and the Xcode Command Line Tools.
 
@@ -102,6 +115,8 @@ pnpm tauri build --bundles app
 ```
 
 The app lands in `src-tauri/target/release/bundle/macos/Buku Token.app`. Copy it to `/Applications` to keep it.
+
+</details>
 
 ### Connecting Cursor and OpenRouter
 

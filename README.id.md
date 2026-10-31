@@ -1,37 +1,66 @@
 <p align="center">
-  <img src="docs/logo/icon-256.png" alt="Buku Token logo: a shelf of books that doubles as a bar chart" width="128" height="128">
+  <img src="docs/logo/icon-256.png" alt="Logo Buku Token: rak buku yang sekaligus terbaca sebagai bar chart" width="128" height="128">
 </p>
 
 <h1 align="center">Buku Token</h1>
 
 <p align="center">
-  Aplikasi menu bar macOS yang menunjukkan sisa kuota dan biaya agent AI coding kamu.
+  Tahu sisanya, dan ke mana perginya. Aplikasi menu bar macOS untuk kuota dan biaya agent AI coding kamu.
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/menubar.png" alt="Menu bar menampilkan sisa kuota Claude Code, Codex, dan Cursor" width="360">
+  <a href="https://buku-token.vercel.app"><img alt="Situs" src="https://img.shields.io/badge/situs-buku--token.vercel.app-black"></a>
+  <a href="https://github.com/fizipan/buku-token/releases/latest"><img alt="Rilis terbaru" src="https://img.shields.io/github/v/release/fizipan/buku-token"></a>
+  <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <img alt="macOS, Apple Silicon" src="https://img.shields.io/badge/macOS-Apple%20Silicon-lightgrey">
+</p>
+
+<p align="center"><a href="README.md">English</a> · Bahasa Indonesia</p>
+
+<p align="center">
+  <img src="docs/screenshots/menubar.png" alt="Menu bar menampilkan sisa kuota Claude Code, Codex, dan Cursor" width="354">
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/overview-dark.png" alt="Tab Ringkasan mode gelap" width="340">
-  <img src="docs/screenshots/overview-light.png" alt="Tab Ringkasan mode terang" width="340">
+  <img src="docs/screenshots/overview-dark.png" alt="Tab Overview mode gelap dengan donut biaya per agent dan baris kuota" width="380">
+  <img src="docs/screenshots/overview-light.png" alt="Tab Overview mode terang" width="380">
 </p>
 
 <p align="center"><sub>Semua screenshot memakai data contoh, dan ditampilkan dalam bahasa Inggris.</sub></p>
 
-Kalau kamu menjalankan beberapa agent sekaligus, gampang sekali lupa langganan mana yang hampir habis dan ke mana uangnya pergi. Buku Token membaca log yang memang sudah ditulis agent di Mac kamu, lalu menampilkan jawabannya sekali klik. Tidak perlu membuat akun, dan tidak ada telemetri. Tampilannya tersedia dalam bahasa Indonesia dan Inggris.
+```bash
+brew install --cask fizipan/tap/buku-token
+```
 
-[Read in English](README.md)
+Kalau kamu menjalankan beberapa agent sekaligus, gampang sekali lupa langganan mana yang hampir habis dan ke mana uangnya pergi. Buku Token membaca log yang memang sudah ditulis agent di Mac kamu, lalu menampilkan jawabannya sekali klik. Tidak perlu membuat akun, tidak ada telemetri, dan tampilannya tersedia dalam bahasa Indonesia dan Inggris.
 
 ## Yang ditampilkan
 
-- **Kuota di menu bar:** logo dan persen sisa untuk tiap agent yang punya kuota.
-- **Biaya hari ini:** donut per agent, plus total dalam Rupiah dan token.
-- **Kuota per agent:** window 5 jam dan mingguan, atau Total, Auto, dan API bulanan untuk Cursor, dengan waktu reset dan proyeksi untuk Claude.
-- **Sesi, model, project, dan riwayat:** token dan biaya setara API dari tiap sudut itu.
-- **Nilai langganan:** yang kamu bayar dibanding biaya pemakaian yang sama kalau memakai harga API.
-- **Notifikasi** (mati bawaannya): saat kuota di bawah 15%, atau saat Claude diperkirakan habis sebelum reset.
-- **Kartu share:** gambar yang bisa disalin atau disimpan, dan biayanya bisa disembunyikan.
+**Sisanya.** Menu bar menampilkan logo dan persen sisa untuk tiap agent yang punya kuota. Buka panelnya untuk melihat window 5 jam dan mingguan, Total, Auto, dan API bulanan milik Cursor, waktu reset, serta proyeksi untuk Claude. Notifikasi, yang mati bawaannya, memberi tahu saat kuota di bawah 15% atau saat Claude diperkirakan habis sebelum reset.
+
+**Ke mana perginya.** Biaya hari ini dalam donut per agent, dengan total dalam Rupiah dan token, lalu token dan biaya setara API per sesi, model, project, dan hari.
+
+**Sepadan atau tidak?** Yang kamu bayar untuk langganan dibanding biaya pemakaian yang sama di harga API, diproyeksikan sampai akhir siklus.
+
+**Kartu untuk dibagikan.** Gambar yang bisa disalin atau disimpan, dan biayanya bisa disembunyikan. Tidak ada nama project, path, atau email di dalamnya.
+
+<table>
+  <tr><th>Sesi</th><th>Model</th></tr>
+  <tr>
+    <td><img src="docs/screenshots/sessions.png" alt="Tab Sessions, tersusun per hari" width="360"></td>
+    <td><img src="docs/screenshots/models.png" alt="Tab Models dengan biaya per model" width="360"></td>
+  </tr>
+  <tr><th>Project</th><th>Riwayat</th></tr>
+  <tr>
+    <td><img src="docs/screenshots/projects.png" alt="Tab Projects dengan biaya per project" width="360"></td>
+    <td><img src="docs/screenshots/history.png" alt="Tab History dengan biaya harian dan nilai langganan" width="360"></td>
+  </tr>
+  <tr><th>Kartu share</th><th>Pengaturan</th></tr>
+  <tr>
+    <td valign="top"><img src="docs/screenshots/share.png" alt="Panel share dengan pratinjau kartu pemakaian" width="360"></td>
+    <td valign="top"><img src="docs/screenshots/settings.png" alt="Jendela Pengaturan" width="360"></td>
+  </tr>
+</table>
 
 ## Tool yang didukung
 
@@ -50,6 +79,7 @@ Angka OpenRouter tidak masuk total, karena pengeluaran yang sama bisa saja sudah
 
 ## Instalasi
 
+
 ```bash
 brew install --cask fizipan/tap/buku-token
 ```
@@ -62,7 +92,8 @@ Saat pertama dibuka, macOS meminta akses ke item Keychain `Claude Code-credentia
 
 DMG juga tersedia di [Releases](https://github.com/fizipan/buku-token/releases). macOS memblokir saat pertama dibuka, jadi buka System Settings, lalu Privacy & Security, dan pilih **Open Anyway**.
 
-### Build dari source
+<details>
+<summary><b>Build dari source</b></summary>
 
 Mac Intel perlu build dari source, dan ini belum pernah diuji di Intel. Yang dibutuhkan: macOS, Node.js, [pnpm](https://pnpm.io), [Rust](https://rustup.rs), dan Xcode Command Line Tools.
 
@@ -84,6 +115,8 @@ pnpm tauri build --bundles app
 ```
 
 Hasilnya ada di `src-tauri/target/release/bundle/macos/Buku Token.app`. Salin ke `/Applications` untuk dipakai terus.
+
+</details>
 
 ### Menghubungkan Cursor dan OpenRouter
 
