@@ -25,6 +25,24 @@ const plans = [
   { name: "Claude Max 5×", day: t.planCc, x: "2.6×", used: 61.3, proj: 100, tick: 23.6, lines: [t.paid1, t.api1, t.proj1] },
   { name: "ChatGPT Plus", day: t.planCx, x: "1.2×", used: 5.4, proj: 16.3, tick: 4.7, lines: [t.paid2, t.api2, t.proj2] },
 ];
+// Only facts the README also states: no ratings, download counts or reviews.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Buku Token",
+  description: t.description,
+  url: new URL(t.self, Astro.site).href,
+  image: new URL(t.ogImage, Astro.site).href,
+  inLanguage: t.htmlLang,
+  applicationCategory: "DeveloperApplication",
+  operatingSystem: "macOS",
+  softwareRequirements: "Apple Silicon Mac, Homebrew",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  license: `${REPO}/blob/main/LICENSE`,
+  downloadUrl: `${REPO}/releases/latest`,
+  codeRepository: REPO,
+  author: { "@type": "Person", name: "fizipan", url: "https://github.com/fizipan" },
+};
 // The mosaic and the closing walls are the app's own screens.
 const screens = ["overview", "history", "models", "overview-light", "projects", "sessions"];
 const columns = [
@@ -40,21 +58,38 @@ const columns = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Buku Token</title>
+    <title>{t.title}</title>
     <meta name="description" content={t.description} />
-    <meta property="og:title" content="Buku Token" />
+    <meta name="author" content="fizipan" />
+    <meta name="theme-color" content="#0f0f11" />
+    <meta property="og:site_name" content="Buku Token" />
+    <meta property="og:title" content={t.title} />
+    <meta property="og:locale" content={t.ogLocale} />
+    <meta property="og:locale:alternate" content={t.ogLocaleAlt} />
     <meta property="og:description" content={t.ogDescription} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={new URL(t.self, Astro.site).href} />
-    <meta property="og:image" content={new URL("/assets/share-card.png", Astro.site).href} />
+    <meta property="og:image" content={new URL(t.ogImage, Astro.site).href} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t.ogAlt} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={t.title} />
+    <meta name="twitter:description" content={t.ogDescription} />
+    <meta name="twitter:image" content={new URL(t.ogImage, Astro.site).href} />
+    <meta name="twitter:image:alt" content={t.ogAlt} />
     <meta name="color-scheme" content="dark" />
     <link rel="canonical" href={new URL(t.self, Astro.site).href} />
     <link rel="alternate" hreflang="en" href={new URL("/", Astro.site).href} />
     <link rel="alternate" hreflang="id" href={new URL("/id/", Astro.site).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL("/", Astro.site).href} />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
     <link rel="alternate icon" href="/assets/icon.png" type="image/png" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    <link rel="preload" href="/assets/overview.png" as="image" fetchpriority="high" />
     <link rel="preload" href="/assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/mona-sans.woff2" as="font" type="font/woff2" crossorigin />
     <script is:inline>
@@ -117,7 +152,7 @@ const columns = [
         <div class="pop-wrap" id="popover">
           <div class="pop">
             <div role="tabpanel" id="panel">
-              {SHOTS.map((s, i) => <img class:list={["shot", { on: i === 0 }]} data-tab={s.tab} data-name={s.en} data-text={lang === "id" ? s.id2 : s.en2} src={`/assets/${s.tab}.png`} width="760" height="1440" alt={i === 0 ? t.shotAlt.replace("%s", s.en) : ""} loading={i === 0 ? "eager" : "lazy"} />)}
+              {SHOTS.map((s, i) => <img class:list={["shot", { on: i === 0 }]} data-tab={s.tab} data-name={s.en} data-text={lang === "id" ? s.id2 : s.en2} src={`/assets/${s.tab}.png`} width="760" height="1440" alt={i === 0 ? t.shotAlt.replace("%s", s.en) : ""} loading={i === 0 ? "eager" : "lazy"} fetchpriority={i === 0 ? "high" : "auto"} />)}
             </div>
             <div class="tabs" role="tablist" aria-label={t.tabsLabel}>
               {SHOTS.map((s, i) => <button type="button" role="tab" data-tab={s.tab} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>{s.en}</button>)}

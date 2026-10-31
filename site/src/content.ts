@@ -44,7 +44,9 @@ export const SHOTS = [
 
 const en = {
   htmlLang: "en", other: "/id/", otherLabel: "ID", otherAria: "Ganti ke Bahasa Indonesia", self: "/",
-  description: "A free, open source macOS menu bar app that shows the quota left and the cost of Claude Code, Codex, Cursor and more. Read from local logs, with no telemetry.",
+  title: "Buku Token: Quota and Cost of AI Coding Agents in the Mac Menu Bar",
+  description: "Free, open source Mac menu bar app that shows the quota left and the cost of Claude Code, Codex, Cursor and more. Mostly from local logs, with no telemetry.",
+  ogImage: "/assets/og-en.png", ogLocale: "en_US", ogLocaleAlt: "id_ID", ogAlt: "Buku Token. Know what's left, and where it went. The app's panel beside the Homebrew install command, with example data.",
   ogDescription: "The quota left and the cost of your AI coding agents, in the Mac menu bar. Open source, with no telemetry.",
   skip: "Skip to content", nav: { features: "Features", tools: "Tools", privacy: "Privacy", share: "Share", install: "Install" }, menu: "Menu",
   trayLabel: "Show or hide the panel. Example quota: Claude 62% left, Codex 55%, Cursor 27%", tabsLabel: "App tabs",
@@ -99,7 +101,9 @@ export type Strings = typeof en;
 const id: Strings = {
   ...en,
   htmlLang: "id", other: "/", otherLabel: "EN", otherAria: "Switch to English", self: "/id/",
-  description: "Aplikasi menu bar macOS gratis dan open source untuk melihat sisa kuota dan biaya Claude Code, Codex, Cursor, dan lainnya. Dibaca dari log lokal, tanpa telemetri.",
+  title: "Buku Token: Kuota dan Biaya Agent AI Coding di Menu Bar Mac",
+  description: "Aplikasi menu bar Mac gratis dan open source: sisa kuota dan biaya Claude Code, Codex, Cursor, dan lainnya. Sebagian besar dari log lokal, tanpa telemetri.",
+  ogImage: "/assets/og-id.png", ogLocale: "id_ID", ogLocaleAlt: "en_US", ogAlt: "Buku Token. Tahu sisanya, dan ke mana perginya. Panel aplikasi di samping perintah instal Homebrew, dengan data contoh.",
   ogDescription: "Sisa kuota dan biaya agent AI coding kamu, di menu bar Mac. Open source, tanpa telemetri.",
   skip: "Lewati ke isi", nav: { features: "Fitur", tools: "Tool", privacy: "Privasi", share: "Bagikan", install: "Instal" },
   trayLabel: "Tampilkan atau sembunyikan panel. Contoh kuota: Claude sisa 62%, Codex 55%, Cursor 27%", tabsLabel: "Tab aplikasi",

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://buku-token.vercel.app/sitemap.xml

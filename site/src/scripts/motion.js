@@ -24,17 +24,10 @@ if (!root.classList.contains("motion")) {
 
   const $$ = (s) => gsap.utils.toArray(s);
   const bar = document.querySelector(".bar");
-  const afterSplash = root.dataset.splash === "on" ? 1.05 : 0.05;
   const start = async () => {
     await Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 2500))]);
 
-    // Hero entrance. Lift the first-paint guard first, so the tweens read the visible state as their end point.
     root.classList.add("ready");
-    gsap.timeline({ delay: afterSplash })
-      .from("#headline .ln > span", { yPercent: 112, duration: 1, ease: "power4.out", stagger: 0.1 })
-      .from("[data-in]", { y: 18, autoAlpha: 0, duration: 0.7, ease: "power3.out", stagger: 0.06 }, 0.35)
-      .fromTo(".pop-wrap", { y: -26, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out", clearProps: "all", onComplete: () => document.querySelector(".pop-wrap").classList.add("live") }, 0.25)
-      .from(".wall-bars i", { scaleY: 0.03, transformOrigin: "bottom", duration: 1, ease: "power3.out", stagger: 0.03 }, 0.3);
 
     // Pins first, top to bottom, so every trigger below is measured with their extra scroll included.
     const mm = gsap.matchMedia();
@@ -72,10 +65,13 @@ if (!root.classList.contains("motion")) {
         onEnter: () => show(0), onEnterBack: (self) => show(Math.round(self.progress * last)),
         onLeave: () => bar.classList.remove("on-light"), onLeaveBack: () => bar.classList.remove("on-light"),
       });
+      const features = document.querySelector('.navs a[href="#stage"]');
+      const toStart = (e) => { e.preventDefault(); e.stopPropagation(); lenis.scrollTo(st.start); };
+      features.addEventListener("click", toStart);
       // Keyboard focus inside a chapter brings that chapter up, so focus is never on something hidden.
       const onFocus = (e) => { const k = panels.findIndex((p) => p.contains(e.target)); if (k >= 0) lenis.scrollTo(st.start + (k / last) * (st.end - st.start), { immediate: true }); };
       document.querySelector(".stage").addEventListener("focusin", onFocus);
-      return () => { root.classList.remove("pin-on"); document.querySelector(".stage").removeEventListener("focusin", onFocus); gsap.set(panels, { clearProps: "clipPath" }); };
+      return () => { root.classList.remove("pin-on"); document.querySelector(".stage").removeEventListener("focusin", onFocus); features.removeEventListener("click", toStart); gsap.set(panels, { clearProps: "clipPath" }); };
     });
 
     // Tools strip: vertical scroll moves it sideways.

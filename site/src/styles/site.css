@@ -24,9 +24,17 @@ html[data-splash=on] .splash{position:fixed;inset:0;z-index:100;display:grid;pla
 @keyframes sp-shelf{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes sp-books{from{transform:translateY(80%)}to{transform:translateY(0)}}
 @keyframes sp-out{to{clip-path:inset(0 0 100% 0);visibility:hidden}}
-/* If the script never arrives, the hero still shows. */
-.motion:not(.ready) #headline,.motion:not(.ready) [data-in],.motion:not(.ready) .pop-wrap{visibility:hidden;animation:late-show 0s 3.2s forwards}
-@keyframes late-show{to{visibility:visible}}
+/* Hero entrance. CSS only, so the largest content never waits for the scripts. */
+:root{--in:.05s}html[data-splash=on]{--in:1.05s}
+.motion #headline .ln>span{animation:line-up 1s cubic-bezier(.16,1,.3,1) var(--in) backwards}
+.motion #headline .ln+.ln>span{animation-delay:calc(var(--in) + .1s)}
+.motion [data-in]{animation:fade-up .7s cubic-bezier(.16,1,.3,1) calc(var(--in) + .35s) backwards}
+.motion .pop-wrap{animation:drop .8s cubic-bezier(.16,1,.3,1) calc(var(--in) + .25s) backwards}
+.motion .wall-bars i{transform-origin:bottom;animation:bar-up 1s cubic-bezier(.16,1,.3,1) calc(var(--in) + .3s + var(--n)*30ms) backwards}
+@keyframes line-up{from{transform:translateY(112%)}}
+@keyframes fade-up{from{opacity:0;transform:translateY(18px)}}
+@keyframes drop{from{opacity:0;transform:translateY(-26px)}}
+@keyframes bar-up{from{transform:scaleY(.03)}}
 
 /* Menu bar: the site's navigation */
 .bar{position:sticky;top:0;z-index:50;height:var(--bar);display:flex;align-items:center;gap:4px;padding:0 10px;background:rgba(24,24,28,.86);backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);border-bottom:1px solid rgba(255,255,255,.07);font-size:13px;line-height:1;user-select:none;transition:background .3s,color .3s,border-color .3s}
@@ -59,7 +67,7 @@ h1 .ln{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}h
 .link{font-weight:500;text-underline-offset:4px}
 .note{margin-top:18px;font-size:14px;color:var(--mute)}
 .cap{margin-top:22px;min-height:3em;font-size:15.5px;line-height:1.45;color:var(--soft);max-width:30em}.cap b{color:var(--text);font-weight:600}
-.pop-wrap{position:absolute;top:6px;right:var(--pop-right);width:380px;transform-origin:top center}.pop-wrap.live,html:not(.motion) .pop-wrap{transition:opacity .22s}
+.pop-wrap{position:absolute;top:6px;right:var(--pop-right);width:380px;transform-origin:top center;transition:opacity .22s}
 .pop-wrap[hidden]{display:block;opacity:0;pointer-events:none;visibility:hidden}
 .pop{position:relative;border-radius:14px;overflow:hidden;background:var(--ink);box-shadow:0 0 0 1px rgba(255,255,255,.12),0 24px 70px rgba(0,0,0,.62)}
 .pop img{display:block;width:100%;height:auto;aspect-ratio:760/1440}.pop img+img{position:absolute;inset:0}
@@ -98,7 +106,7 @@ svg.gc{clip-path:inset(0);transition:clip-path 1.4s var(--ease)}
 .logo{width:26px;height:26px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;flex:none;background:color-mix(in srgb,currentColor 14%,transparent);font:600 10.5px/1 var(--sans);letter-spacing:.01em}
 .logo svg{width:15px;height:15px;fill:currentColor}
 .ink-cc{color:var(--cc)}.ink-cx{color:var(--cx)}.ink-oc{color:var(--oc)}.ink-hm{color:var(--hm)}.ink-cr{color:var(--cr)}.ink-ag{color:var(--ag)}.ink-ne{color:var(--ne)}
-.ink-cc-l{color:var(--cc-l)}.ink-cx-l{color:var(--cx-l)}.ink-oc-l{color:var(--oc-l)}.ink-hm-l{color:var(--hm-l)}.ink-cr-l{color:var(--cr-l)}
+.ink-cc-l{color:var(--cc-l)}.ink-cx-l{color:var(--cx-l)}.ink-oc-l{color:#0d6b47}.ink-hm-l{color:var(--hm-l)}.ink-cr-l{color:var(--cr-l)}
 
 /* Sections */
 section,.panel{padding:clamp(72px,11vw,150px) var(--edge)}
