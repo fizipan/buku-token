@@ -162,7 +162,7 @@ cd src-tauri && cargo test         # tes Rust
 cd src-tauri && cargo clippy --all-targets -- -D warnings
 ```
 
-Dibangun dengan Tauri 2, Rust, React, TypeScript, Tailwind CSS, shadcn/ui, dan Recharts. Baca [CONTRIBUTING.md](CONTRIBUTING.md) sebelum membuka pull request, dan [SECURITY.md](SECURITY.md) untuk melaporkan celah keamanan.
+Dibangun dengan Tauri 2, Rust, React, TypeScript, Tailwind CSS, shadcn/ui, dan Recharts. Situsnya ada di `site/`, dibuat dengan Astro, GSAP, dan Lenis. Jalankan dengan `cd site && pnpm install && pnpm dev`. Baca [CONTRIBUTING.md](CONTRIBUTING.md) sebelum membuka pull request, dan [SECURITY.md](SECURITY.md) untuk melaporkan celah keamanan.
 
 ## Kredit
 

@@ -162,7 +162,7 @@ cd src-tauri && cargo test         # Rust tests
 cd src-tauri && cargo clippy --all-targets -- -D warnings
 ```
 
-Built with Tauri 2, Rust, React, TypeScript, Tailwind CSS, shadcn/ui and Recharts. See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request, and [SECURITY.md](SECURITY.md) to report a vulnerability.
+Built with Tauri 2, Rust, React, TypeScript, Tailwind CSS, shadcn/ui and Recharts. The website is in `site/`, built with Astro, GSAP and Lenis. Run it with `cd site && pnpm install && pnpm dev`. See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request, and [SECURITY.md](SECURITY.md) to report a vulnerability.
 
 ## Credits
 

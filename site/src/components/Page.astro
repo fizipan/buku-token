@@ -1,0 +1,368 @@
+---
+import "lenis/dist/lenis.css";
+import "../styles/site.css";
+import Sprite from "./Sprite.astro";
+import { AGENTS, DAYS, HOURS, MODELS, PROJECTS, SHOTS, STRINGS } from "../content";
+
+const { lang } = Astro.props as { lang: "en" | "id" };
+const t = STRINGS[lang];
+const REPO = "https://github.com/fizipan/buku-token";
+const BREW = "brew install --cask fizipan/tap/buku-token";
+const usd = (v: number) => "$" + v.toFixed(2);
+const sum = (a: number[]) => a.reduce((x, y) => x + y, 0);
+
+// The Claude 5h session from the Overview: 200 minutes in at 38%, heading for 71% at the reset at minute 284.
+const curve = Array.from({ length: 11 }, (_, i) => [i * 20, 100 - 38 * (i / 10) ** 1.1]);
+const line = "M" + curve.map(([x, y]) => `${x} ${y.toFixed(2)}`).join("L");
+
+const quotas = [
+  { name: "Claude Code", sym: "l-cc", id: "cc", win: t.q5h, left: 62, when: "19:56" },
+  { name: "Claude Code", sym: "l-cc", id: "cc", win: t.qWeek, left: 39, when: "Nov 2" },
+  { name: "Codex", sym: "l-cx", id: "cx", win: t.qWeek, left: 55, when: "Nov 4" },
+  { name: "Cursor", sym: "l-cr", id: "cr", win: t.qMonth, left: 27, when: "Nov 7" },
+];
+const plans = [
+  { name: "Claude Max 5×", day: t.planCc, x: "2.6×", used: 61.3, proj: 100, tick: 23.6, lines: [t.paid1, t.api1, t.proj1] },
+  { name: "ChatGPT Plus", day: t.planCx, x: "1.2×", used: 5.4, proj: 16.3, tick: 4.7, lines: [t.paid2, t.api2, t.proj2] },
+];
+// The mosaic and the closing walls are the app's own screens.
+const screens = ["overview", "history", "models", "overview-light", "projects", "sessions"];
+const columns = [
+  ["overview", "projects", "history"],
+  ["sessions", "overview-light", "models"],
+  ["models", "history", "overview"],
+  ["overview-light", "sessions", "projects"],
+];
+---
+
+<!doctype html>
+<html lang={t.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Buku Token</title>
+    <meta name="description" content={t.description} />
+    <meta property="og:title" content="Buku Token" />
+    <meta property="og:description" content={t.ogDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={new URL(t.self, Astro.site).href} />
+    <meta property="og:image" content={new URL("/assets/share-card.png", Astro.site).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="canonical" href={new URL(t.self, Astro.site).href} />
+    <link rel="alternate" hreflang="en" href={new URL("/", Astro.site).href} />
+    <link rel="alternate" hreflang="id" href={new URL("/id/", Astro.site).href} />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/assets/icon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    <link rel="preload" href="/assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/mona-sans.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      // Runs before first paint, so the splash never flickers and the language never flashes.
+      (() => {
+        const h = document.documentElement, calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!calm) h.classList.add("motion");
+        try {
+          const saved = localStorage.getItem("bt-lang");
+          if (location.pathname === "/" && (saved === "id" || (!saved && (navigator.language || "").toLowerCase().startsWith("id")))) location.replace("/id/");
+          if (!calm && !sessionStorage.getItem("bt-splash")) { h.dataset.splash = "on"; sessionStorage.setItem("bt-splash", "1"); }
+        } catch {}
+      })();
+    </script>
+  </head>
+  <body data-strings={JSON.stringify({ copy: t.copy, copied: t.copied, last30: t.last30, today: t.today, yesterday: t.yesterday, ago: t.ago, hint: t.hint, shotAlt: t.shotAlt, locale: lang === "id" ? "id-ID" : "en-US" })}>
+    <Sprite />
+    <div class="splash" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <g class="sp-books"><rect x="10" y="30" width="20" height="48" rx="3" fill="var(--cx)" /><rect x="34" y="11" width="20" height="67" rx="3" fill="var(--cc)" /><g transform="rotate(-15 70 78)"><rect x="70" y="27" width="18" height="51" rx="3" fill="var(--cr)" /></g></g>
+        <rect class="sp-shelf" x="8" y="82" width="84" height="7" rx="2.5" fill="var(--text)" />
+      </svg>
+    </div>
+    <a class="skip" href="#main">{t.skip}</a>
+
+    <nav class="bar" aria-label="Main">
+      <a class="app" href="#top"><svg class="bt" aria-hidden="true"><use href="#bt" /></svg>Buku Token</a>
+      <button class="menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="navs">{t.menu}</button>
+      <div class="navs" id="navs">
+        <a href="#stage">{t.nav.features}</a>
+        <a href="#tools">{t.nav.tools}</a>
+        <a href="#privacy">{t.nav.privacy}</a>
+        <a href="#share">{t.nav.share}</a>
+        <a href="#install">{t.nav.install}</a>
+        <a href={REPO}>GitHub</a>
+      </div>
+      <div class="bar-right">
+        <button class="tray" id="tray" type="button" aria-expanded="true" aria-controls="popover" aria-label={t.trayLabel}>
+          <span><svg aria-hidden="true"><use href="#l-cc" /></svg>62%</span>
+          <span><svg aria-hidden="true"><use href="#l-cx" /></svg>55%</span>
+          <span><svg aria-hidden="true"><use href="#l-cr" /></svg>27%</span>
+        </button>
+        <a class="lang" id="lang" href={t.other} hreflang={lang === "en" ? "id" : "en"} data-lang={lang === "en" ? "id" : "en"} aria-label={t.otherAria}>{t.otherLabel}</a>
+        <span class="clock" id="clock" aria-hidden="true"></span>
+      </div>
+    </nav>
+
+    <main id="main">
+      <div class="desk" id="top">
+        <div class="pitch">
+          <h1 id="headline"><span class="ln"><span>{t.h1[0]}</span></span><span class="ln"><span class="ghost">{t.h1[1]}</span></span></h1>
+          <p class="lede" data-in>{t.lede}</p>
+          <div class="acts" data-in>
+            <div class="cmd"><code id="heroCmd">{BREW}</code><button class="copy" type="button" data-copy="#heroCmd">{t.copy}</button></div>
+            <a class="link" href={REPO}>{t.cta}</a>
+          </div>
+          <p class="note" data-in set:html={t.note}></p>
+          <p class="cap" id="cap" aria-live="polite" data-in><b>{SHOTS[0].en}.</b> {lang === "id" ? SHOTS[0].id2 : SHOTS[0].en2}<br />{t.hint}</p>
+        </div>
+        <div class="pop-wrap" id="popover">
+          <div class="pop">
+            <div role="tabpanel" id="panel">
+              {SHOTS.map((s, i) => <img class:list={["shot", { on: i === 0 }]} data-tab={s.tab} data-name={s.en} data-text={lang === "id" ? s.id2 : s.en2} src={`/assets/${s.tab}.png`} width="760" height="1440" alt={i === 0 ? t.shotAlt.replace("%s", s.en) : ""} loading={i === 0 ? "eager" : "lazy"} />)}
+            </div>
+            <div class="tabs" role="tablist" aria-label={t.tabsLabel}>
+              {SHOTS.map((s, i) => <button type="button" role="tab" data-tab={s.tab} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>{s.en}</button>)}
+            </div>
+          </div>
+        </div>
+        <div class="wall" aria-hidden="true">
+          <p class="wall-cap">{t.wallCap}</p>
+          <div class="wall-bars">
+            {Object.entries(HOURS).map(([hour, costs], n) => (
+              <i style={`grid-column:${+hour + 1};grid-row:1;--n:${n};height:${(sum(costs) / 4.2) * 100}%`}>
+                {costs.map((v, j) => v > 0 && <b style={`flex:${v} 0 0;background:var(--${AGENTS[j].id})`}></b>)}
+              </i>
+            ))}
+          </div>
+          <div class="wall-axis"><span>00</span><span>06</span><span>12</span><span>18</span></div>
+        </div>
+      </div>
+
+      <section class="mosaic" aria-hidden="true">
+        <div class="mosaic-cols">
+          {columns.map((col) => <div class="m-col">{col.map((s) => <img src={`/assets/${s}.png`} width="760" height="1440" alt="" loading="lazy" />)}</div>)}
+        </div>
+        <div class="wordmark"><span>Buku Token</span></div>
+      </section>
+
+      <div class="band" data-tone="light" aria-hidden="true">
+        <div class="band-track">
+          {[0, 1].map(() => (
+            <div class="band-set">
+              {t.tools.map((tool) => <span class="band-item"><span class:list={["logo", `ink-${tool.id}`]}>{tool.sym ? <svg><use href={`#${tool.sym}`} /></svg> : tool.short}</span>{tool.name}</span>)}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="stage" id="stage">
+        <section class="panel p-left" id="left" data-panel>
+          <h2>{t.leftH}</h2>
+          <p class="sub">{t.leftSub}</p>
+          <div class="left-grid">
+            <figure class="burn-fig rise" aria-label={t.burnLabel}>
+              <figcaption class="mini">Claude Code <span class="mini-sub">{t.q5h}</span></figcaption>
+              <div class="burn" aria-hidden="true">
+                <svg class="gc" viewBox="0 0 284 100" preserveAspectRatio="none">
+                  <defs><linearGradient id="wash" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#d9744a" stop-opacity=".32" /><stop offset="1" stop-color="#d9744a" stop-opacity="0" /></linearGradient></defs>
+                  {[0, 50].map((y) => <line x1="0" x2="284" y1={y} y2={y} stroke="#2c2c32" vector-effect="non-scaling-stroke" />)}
+                  <line x1="0" x2="284" y1="100" y2="100" stroke="#3a3a41" vector-effect="non-scaling-stroke" />
+                  <path d={`${line}L200 100L0 100Z`} fill="url(#wash)" />
+                  <path d={line} fill="none" stroke="#d9744a" stroke-width="2.5" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+                  <path d="M200 62L284 29" fill="none" stroke="#d9744a" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+                </svg>
+                <span class="burn-y" style="bottom:100%">{t.limit}</span><span class="burn-y" style="bottom:50%">50%</span><span class="burn-y" style="bottom:0">0%</span>
+                <i class="burn-dot"></i>
+                <span class="burn-note now">{t.burnNow}</span>
+                <span class="burn-note end">{t.burnEnd}</span>
+              </div>
+              <div class="burn-x" aria-hidden="true"><span>15:12</span><span>{t.now}</span><span>19:56</span></div>
+            </figure>
+            <div>
+              <ul class="quota rise">
+                {quotas.map((q, n) => (
+                  <li>
+                    <span class:list={["logo", `ink-${q.id}`]}><svg aria-hidden="true"><use href={`#${q.sym}`} /></svg></span>
+                    <div class="q-name">{q.name} <span>{q.win}</span></div>
+                    <b>{t.qLeft} {q.left}%</b><span class="q-when">{q.when}</span>
+                    <div class="meter" aria-hidden="true"><i class="gx" style={`--n:${n};width:${100 - q.left}%;background:var(--${q.id})`}></i></div>
+                  </li>
+                ))}
+              </ul>
+              <p class="fine">{t.leftFine}</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel p-went paper" id="went" data-panel data-tone="light">
+          <div class="went-head">
+            <div><h2>{t.wentH}</h2><p class="sub">{t.wentSub}</p></div>
+            <div class="readout"><span id="rLabel">{t.last30}</span><strong id="rCost">$600.00</strong><span>{t.avg}</span></div>
+          </div>
+          <div class="days rise" id="days" tabindex="0" role="group" aria-label={t.daysLabel}>
+            <div class="days-grid" aria-hidden="true"><i style="bottom:100%"><span>$30</span></i><i style="bottom:66.67%"><span>$20</span></i><i style="bottom:33.33%"><span>$10</span></i><i style="bottom:0"><span>$0</span></i></div>
+            <div class="days-cols" id="dayCols" aria-hidden="true">
+              {DAYS.map((d, n) => (
+                <i class="gy" data-day={d.join(",")} style={`--n:${n};height:${(sum(d) / 30) * 100}%`}>
+                  {d.map((v, j) => v > 0 && <b style={`flex:${v} 0 0;background:var(--${AGENTS[j].id}-l)`}></b>)}
+                </i>
+              ))}
+            </div>
+          </div>
+          <div class="days-x" aria-hidden="true"><span>{t.ago29}</span><span>{t.today}</span></div>
+          <ul class="key" id="key">
+            {AGENTS.map((a) => <li data-total={a.total}><i style={`background:var(--${a.id}-l)`}></i>{a.name} <b>{usd(a.total)}</b></li>)}
+          </ul>
+          <p class="sr" id="dayLive" role="status"></p>
+        </section>
+
+        <section class="panel p-worth" id="worth" data-panel>
+          <div class="worth">
+            <div><h2>{t.worthH}</h2><p class="sub">{t.worthSub}</p><p class="fine">{t.worthFine}</p></div>
+            <div class="rise">
+              <p class="plans-sum">{t.sum[0]} <b>$120/mo</b>, {t.sum[1]} <b>$283</b>, {t.sum[2]} <b>2.4×</b></p>
+              {plans.map((p) => (
+                <div class="plan">
+                  <div class="plan-top"><div><h3 class="mini">{p.name}</h3><p class="mini-sub">{p.day}</p></div><strong class="plan-x">{p.x}</strong></div>
+                  <div class="scale" aria-hidden="true"><i class="gx proj" style={`--n:1;width:${p.proj}%`}></i><i class="gx used" style={`--n:0;width:${p.used}%`}></i><i class="tick" style={`left:${p.tick}%`}></i></div>
+                  <ul class="plan-lines"><li><i class="t"></i>{p.lines[0]}</li><li><i class="used"></i>{p.lines[1]}</li><li><i class="proj"></i>{p.lines[2]}</li></ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section class="paper breakdown" data-tone="light">
+        <h2 data-title>{t.breakH}</h2>
+        <div class="split">
+          <div>
+            <h3 class="mini">{t.byProject}</h3><p class="mini-sub">{t.last7}</p>
+            <ul class="rows rise">
+              {PROJECTS.map((p, n) => (
+                <li>
+                  <span class="r-name">{p.name ?? t.otherProjects}</span><span class="r-cost">{usd(p.cost)}</span>
+                  <div class="track" aria-hidden="true"><div class="stack gx" style={`--n:${n};width:${(p.cost / 42) * 100}%`}>{p.by.map((v, j) => v > 0 && <i style={`flex:${v} 0 0;background:var(--${AGENTS[j].id}-l)`}></i>)}</div></div>
+                  <span class="r-meta">{p.sessions} {t.sessions}, {p.share}%</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 class="mini">{t.byModel}</h3><p class="mini-sub">{t.last7}</p>
+            <ul class="rows rise">
+              {MODELS.map((m, n) => (
+                <li>
+                  <span class="r-name"><span class:list={["logo", `ink-${m.id}-l`]} aria-hidden="true">{m.sym ? <svg><use href={`#${m.sym}`} /></svg> : "OC"}</span>{m.name}</span>
+                  <span class="r-cost">{m.cost === null ? <><em>{t.noPrice}</em>–</> : <><em>{m.share}%</em>{usd(m.cost)}</>}</span>
+                  <div class="track" aria-hidden="true"><div class="stack gx" style={`--n:${n};width:${((m.cost ?? 0) / 78) * 100}%;background:var(--${m.id}-l)`}></div></div>
+                </li>
+              ))}
+            </ul>
+            <p class="fine">{t.cacheNote}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="strip" id="tools">
+        <div class="strip-track">
+          <div class="strip-intro">
+            <h2>{t.toolsH}</h2>
+            <p class="sub">{t.toolsSub}</p>
+          </div>
+          {t.tools.map((tool, i) => (
+            <article class="tool">
+              <p class="tool-grp">{tool.out ? t.grpOut : t.grpIn}</p>
+              <span class:list={["logo big", `ink-${tool.id}`]} aria-hidden="true">{tool.sym ? <svg><use href={`#${tool.sym}`} /></svg> : tool.short}</span>
+              <h3>{tool.name}</h3>
+              <dl>
+                <div><dt>{t.thCost}</dt><dd>{tool.cost}</dd></div>
+                <div><dt>{t.thQuota}</dt><dd class:list={{ no: !tool.quota }}>{tool.quota ?? t.none}</dd></div>
+                <div><dt>{t.thSource}</dt><dd class="path">{tool.src}</dd></div>
+              </dl>
+            </article>
+          ))}
+          <div class="strip-end"><p>{t.toolsFoot}</p></div>
+        </div>
+      </section>
+
+      <section class="privacy" id="privacy">
+        <h2 data-title>{t.privH}</h2>
+        <p class="sub">{t.privSub}</p>
+        <div class="ledger">
+          <div class="col-a"><h3>{t.readH}</h3><ul>{t.reads.map(([a, b]) => <li>{a}<small>{b}</small></li>)}</ul></div>
+          <div class="col-b never"><h3>{t.neverH}</h3><ul>{t.nevers.map(([a, b]) => <li>{a}{b && <small>{b}</small>}</li>)}</ul></div>
+          <div class="col-c"><h3>{t.netH}</h3><ul>{t.nets.map(([a, b]) => <li><span class="path">{a}</span><small>{b}</small></li>)}</ul></div>
+        </div>
+      </section>
+
+      <section class="share" id="share">
+        <div>
+          <h2 data-title>{t.shareH}</h2>
+          <p class="sub">{t.shareSub}</p>
+          <ul class="points">{t.points.map((p) => <li>{p}</li>)}</ul>
+        </div>
+        <img id="card" src="/assets/share-card.png" width="1080" height="840" loading="lazy" alt={t.shareAlt} />
+      </section>
+
+      <section class="paper theme" id="fit" data-tone="light">
+        <div><h2 data-title>{t.fitH}</h2><p class="sub">{t.fitSub}</p></div>
+        <div>
+          <div class="wipe" id="wipe">
+            <img src="/assets/overview.png" width="760" height="1440" loading="lazy" alt={t.darkAlt} />
+            <img src="/assets/overview-light.png" width="760" height="1440" loading="lazy" alt={t.lightAlt} />
+            <i class="wipe-line" aria-hidden="true"></i>
+            <input type="range" min="0" max="100" value="50" aria-label={t.wipeLabel} />
+          </div>
+          <p class="wipe-hint">{t.wipeHint}</p>
+        </div>
+      </section>
+
+      <section class="closer" id="install">
+        <div class="closer-walls" aria-hidden="true">
+          {[0, 1].map((side) => <div class:list={["c-wall", side ? "r" : "l"]}>{(side ? [...screens].reverse() : screens).map((s) => <img src={`/assets/${s}.png`} width="760" height="1440" alt="" loading="lazy" />)}</div>)}
+        </div>
+        <div class="closer-mid">
+          <h2>{t.instH}</h2>
+          <p class="sub" set:html={t.instSub}></p>
+          <div class="cmd"><code id="closeCmd">{BREW}</code><button class="copy" type="button" data-copy="#closeCmd">{t.copy}</button></div>
+          <a class="link" href={REPO}>{t.cta}</a>
+        </div>
+      </section>
+
+      <section class="install">
+        <div class="install-head">
+          <p class="needs" set:html={t.limits}></p>
+          <p class="needs" id="notarized" set:html={t.notar}></p>
+        </div>
+        <div>
+          <ol class="steps">
+            <li><span class="n" aria-hidden="true">1</span><div><h3>{t.in2}</h3><p set:html={t.in2p}></p></div></li>
+            <li><span class="n" aria-hidden="true">2</span><div><h3>{t.in3}</h3><div class="code-wrap"><pre class="code" id="upgrade" tabindex="0">brew upgrade --cask buku-token</pre><button class="copy" type="button" data-copy="#upgrade">{t.copy}</button></div></div></li>
+          </ol>
+          <details class="source">
+            <summary>{t.srcSum}</summary>
+            <p class="needs" set:html={t.dmg}></p>
+            <p class="needs">{t.srcNeeds}</p>
+            <ol class="steps">
+              <li><span class="n" aria-hidden="true">1</span><div><h3>{t.st1}</h3><p set:html={t.st1p}></p></div></li>
+              <li><span class="n" aria-hidden="true">2</span><div><h3>{t.st2}</h3><div class="code-wrap"><pre class="code" id="cmd" tabindex="0">git clone https://github.com/fizipan/buku-token.git
+cd buku-token
+pnpm install
+pnpm tauri build --bundles app</pre><button class="copy" type="button" data-copy="#cmd">{t.copy}</button></div></div></li>
+              <li><span class="n" aria-hidden="true">3</span><div><h3>{t.st3}</h3><p set:html={t.st3p}></p></div></li>
+            </ol>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="row"><a class="brand" href="#top"><svg aria-hidden="true"><use href="#bt" /></svg>Buku Token</a><a href={REPO}>GitHub</a><a href={`${REPO}/blob/main/README.md`}>README</a><a href={`${REPO}/blob/main/LICENSE`}>{t.license}</a><a href={`${REPO}/blob/main/SECURITY.md`}>{t.security}</a></div>
+      <p>{t.foot1}</p>
+      <p set:html={t.foot2}></p>
+    </footer>
+
+    <script>import "../scripts/app.js";</script>
+    <script>import "../scripts/motion.js";</script>
+  </body>
+</html>
